@@ -423,7 +423,7 @@ const App = () => {
                         <span className="text-slate-500">Robust</span>
                         <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
-                            Fluid Systems
+                            Dynamic Systems
                         </span>
                     </h1>
 
@@ -467,8 +467,8 @@ const App = () => {
                                 The Engineer's Mindset
                             </h2>
                             <p className="text-slate-400 mb-6 text-lg leading-relaxed">
-                                With an MEng in Electrical Engineering focusing
-                                on
+                                With an MEng (Cum Laude) in Electrical
+                                Engineering focusing on
                                 <span className="text-cyan-300">
                                     {" "}
                                     numerical fluid simulation
@@ -496,14 +496,14 @@ const App = () => {
                                         Years Experience
                                     </div>
                                 </div>
-                                <div className="p-4 bg-slate-900 border border-slate-800 rounded-lg hover:border-cyan-500/30 transition-colors">
+                                {/* <div className="p-4 bg-slate-900 border border-slate-800 rounded-lg hover:border-cyan-500/30 transition-colors">
                                     <div className="text-3xl font-bold text-white mb-1">
                                         97%
                                     </div>
                                     <div className="text-sm text-slate-500">
                                         Cache Optimization
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
 
@@ -559,8 +559,14 @@ const App = () => {
                                         company's largest UI.
                                     </li>
                                     <li>
-                                        Implemented custom TanStack Query
-                                        backbone.
+                                        Independently designed and led the
+                                        adoption of a custom type-safe request
+                                        management system with automatic
+                                        caching.
+                                    </li>
+                                    <li>
+                                        Led a team to design and implement an
+                                        efficient AI based microservice.
                                     </li>
                                     <li>
                                         Architectural decision maker across
@@ -634,12 +640,71 @@ const App = () => {
                             </div>
                         </div>
 
-                        {/* Job 4: Lab Assistant */}
+                        {/* Job 4: MEng (Cum Laude) */}
                         <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
                             <div className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-700 bg-slate-900 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
-                                <div className="w-2 h-2 bg-slate-500 rounded-full group-hover:bg-cyan-400 transition-colors"></div>
+                                <div className="w-2 h-2 bg-slate-500 rounded-full group-hover:bg-purple-400 transition-colors"></div>
                             </div>
-                            <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900/80 p-6 rounded-xl border border-slate-800 shadow-xl backdrop-blur-sm hover:border-cyan-500/30 transition-all">
+                            <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900/80 p-6 rounded-xl border border-slate-800 shadow-xl backdrop-blur-sm hover:border-purple-500/30 transition-all">
+                                <div className="flex justify-between items-start mb-2">
+                                    <h3 className="font-bold text-white text-lg">
+                                        MEng (Cum Laude)
+                                    </h3>
+                                    <span className="text-xs font-mono text-slate-500 bg-slate-900 px-2 py-1 rounded border border-slate-800">
+                                        2020 - 2024
+                                    </span>
+                                </div>
+                                <p className="text-slate-400 text-sm mb-3">
+                                    CPUT, Bellville
+                                </p>
+                                <ul className="text-sm text-slate-400 list-disc list-inside space-y-1">
+                                    <li>
+                                        Temporal and Spectral Analysis of
+                                        Experimental and Simulated Boussinesq
+                                        Waves
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        {/* Job 5: BTech */}
+                        <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                            <div className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-700 bg-slate-900 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                                <div className="w-2 h-2 bg-slate-500 rounded-full group-hover:bg-purple-400 transition-colors"></div>
+                            </div>
+                            <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900/80 p-6 rounded-xl border border-slate-800 shadow-xl backdrop-blur-sm hover:border-purple-500/30 transition-all">
+                                <div className="flex justify-between items-start mb-2">
+                                    <h3 className="font-bold text-white text-lg">
+                                        BTech - Electrical Engineering
+                                    </h3>
+                                    <span className="text-xs font-mono text-slate-500 bg-slate-900 px-2 py-1 rounded border border-slate-800">
+                                        2019
+                                    </span>
+                                </div>
+                                <p className="text-slate-400 text-sm mb-3">
+                                    CPUT, Bellville
+                                </p>
+                                <ul className="text-sm text-slate-400 list-disc list-inside space-y-1">
+                                    <li>
+                                        Created an AI robot that could follow
+                                        you using TensorFlow.js object detection
+                                        running on a smartphone.
+                                    </li>
+                                    <li>
+                                        Simulated the control system for nuclear
+                                        power plant fuel rod insertion using
+                                        MATLAB.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        {/* Job 6: Lab Assistant */}
+                        <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                            <div className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-700 bg-slate-900 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                                <div className="w-2 h-2 bg-slate-500 rounded-full group-hover:bg-purple-400 transition-colors"></div>
+                            </div>
+                            <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900/80 p-6 rounded-xl border border-slate-800 shadow-xl backdrop-blur-sm hover:border-purple-500/30 transition-all">
                                 <div className="flex justify-between items-start mb-2">
                                     <h3 className="font-bold text-white text-lg">
                                         Lab Assistant / Trainee
