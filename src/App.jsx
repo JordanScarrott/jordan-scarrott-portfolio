@@ -1,29 +1,20 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
 import {
-    Github,
-    Linkedin,
-    Mail,
-    ExternalLink,
-    Terminal,
-    Cpu,
-    Waves,
-    Code2,
-    Database,
     Activity,
-    Zap,
-    Box,
-    Layers,
-    BrainCircuit,
-    Trophy,
-    Minus,
+    Code2,
+    Cpu,
+    Mail,
     Maximize2,
-    Search,
+    Minus,
+    Terminal,
+    Trophy,
+    Waves,
 } from "lucide-react";
-import { skills } from "./data/skills.jsx";
+import { useEffect, useRef, useState } from "react";
 import { experience } from "./data/experience";
 import { projects } from "./data/projects";
+import { skills } from "./data/skills.jsx";
 import { socialLinks } from "./data/socials.jsx";
-import { possibleLogs, initialLogs } from "./data/terminal";
+import { initialLogs, possibleLogs } from "./data/terminal";
 
 // --- COMPONENT: INTERACTIVE WAVE BACKGROUND ---
 // A nod to "Boussinesq Waves" and Numerical Fluid Simulation
@@ -283,7 +274,7 @@ const SystemTerminal = () => {
 
 // --- MAIN APP COMPONENT ---
 const App = () => {
-    const [activeSection, setActiveSection] = useState("home");
+    const [setActiveSection] = useState("home");
 
     const scrollTo = (id) => {
         const element = document.getElementById(id);
@@ -639,7 +630,7 @@ const ProjectCard = ({ title, desc, tags, links, color }) => {
     );
 };
 
-const SocialLink = ({ href, icon: Icon, label }) => (
+const SocialLink = ({ href, label }) => (
     <a
         href={href}
         target="_blank"
@@ -651,7 +642,7 @@ const SocialLink = ({ href, icon: Icon, label }) => (
     </a>
 );
 
-const HeaderSocialLink = ({ href, icon: Icon, label }) => (
+const HeaderSocialLink = ({ href, label }) => (
     <a
         href={href}
         target="_blank"

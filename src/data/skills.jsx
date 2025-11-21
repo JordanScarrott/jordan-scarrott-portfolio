@@ -1,12 +1,12 @@
 import {
-    Layers,
+    Activity,
     Box,
     Code2,
-    Zap,
     Cpu,
-    Search,
-    Activity,
     Database,
+    Layers,
+    Search,
+    Zap,
 } from "lucide-react";
 
 // Custom CoffeeIcon because it's not in lucide-react exports in the original file

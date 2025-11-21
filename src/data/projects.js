@@ -1,15 +1,10 @@
-import { Github, ExternalLink, Trophy } from "lucide-react";
+import { ExternalLink, Github, Trophy } from "lucide-react";
 
 export const projects = [
     {
         title: "Castor - On-Device AI",
         desc: "Supercharged Gemini Nano with Google Mangle compiled to WASM to perform multi-step cross-tab deductive reasoning locally. An on-device AI extension capable of complex logical inference.",
-        tags: [
-            "WASM",
-            "Gemini Nano",
-            "Google Mangle",
-            "Reasoning",
-        ],
+        tags: ["WASM", "Gemini Nano", "Google Mangle", "Reasoning"],
         links: [
             {
                 label: "GitHub",
