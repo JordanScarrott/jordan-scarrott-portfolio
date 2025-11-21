@@ -1,6 +1,5 @@
 import {
     Activity,
-    Code2,
     Cpu,
     Mail,
     Maximize2,
@@ -12,9 +11,13 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { experience } from "./data/experience";
 import { projects } from "./data/projects";
-import { skills } from "./data/skills.jsx";
-import { socialLinks } from "./data/socials.jsx";
+import { skills } from "./data/skills";
+import { socialLinks } from "./data/socials";
 import { initialLogs, possibleLogs } from "./data/terminal";
+import HeaderSocialLink from "./components/ui/HeaderSocialLink";
+import ProjectCard from "./components/ui/ProjectCard";
+import SocialLink from "./components/ui/SocialLink";
+import MetricItem from "./components/ui/MetricItem";
 
 // --- COMPONENT: INTERACTIVE WAVE BACKGROUND ---
 // A nod to "Boussinesq Waves" and Numerical Fluid Simulation
@@ -426,32 +429,17 @@ const App = () => {
                                         Years Experience
                                     </div>
                                 </div>
-                                {/* <div className="p-4 bg-slate-900 border border-slate-800 rounded-lg hover:border-cyan-500/30 transition-colors">
-                                    <div className="text-3xl font-bold text-white mb-1">
-                                        97%
-                                    </div>
-                                    <div className="text-sm text-slate-500">
-                                        Cache Optimization
-                                    </div>
-                                </div> */}
                             </div>
                         </div>
 
                         {/* Skills Grid */}
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                             {skills.map((skill, idx) => (
-                                <div
+                                <MetricItem
                                     key={idx}
-                                    className="bg-slate-900/50 border border-slate-800 p-4 rounded-xl flex flex-col items-center justify-center gap-3 hover:bg-slate-800 hover:border-cyan-500/50 transition-all group text-center cursor-default backdrop-blur-sm"
-                                >
-                                    <skill.icon
-                                        className="text-slate-500 group-hover:text-cyan-400 transition-colors"
-                                        size={24}
-                                    />
-                                    <span className="text-sm font-medium text-slate-300">
-                                        {skill.name}
-                                    </span>
-                                </div>
+                                    name={skill.name}
+                                    icon={skill.icon}
+                                />
                             ))}
                         </div>
                     </div>
@@ -577,81 +565,5 @@ const App = () => {
         </div>
     );
 };
-
-// --- HELPER COMPONENTS ---
-
-const ProjectCard = ({ title, desc, tags, links, color }) => {
-    const borderColor =
-        color === "cyan"
-            ? "hover:border-cyan-500/50"
-            : color === "purple"
-            ? "hover:border-purple-500/50"
-            : "hover:border-green-500/50";
-
-    return (
-        <div
-            className={`bg-slate-900/50 border border-slate-800 rounded-xl p-6 flex flex-col transition-all group ${borderColor} hover:shadow-2xl hover:-translate-y-1 backdrop-blur-sm`}
-        >
-            <div className="flex justify-between items-start mb-4">
-                <h3 className="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors">
-                    {title}
-                </h3>
-                <div className="p-2 bg-slate-800 rounded-lg text-slate-400 group-hover:text-white transition-colors">
-                    <Code2 size={20} />
-                </div>
-            </div>
-            <p className="text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
-                {desc}
-            </p>
-            <div className="flex flex-wrap gap-2 mb-6">
-                {tags.map((tag) => (
-                    <span
-                        key={tag}
-                        className="text-xs font-mono px-2 py-1 bg-slate-800 text-slate-300 rounded border border-slate-700"
-                    >
-                        {tag}
-                    </span>
-                ))}
-            </div>
-            <div className="flex flex-wrap gap-4 pt-4 border-t border-slate-800">
-                {links.map((link, i) => (
-                    <a
-                        key={i}
-                        href={link.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center gap-2 text-sm font-bold text-slate-400 hover:text-white transition-colors"
-                    >
-                        <link.icon size={16} /> {link.label}
-                    </a>
-                ))}
-            </div>
-        </div>
-    );
-};
-
-const SocialLink = ({ href, label }) => (
-    <a
-        href={href}
-        target="_blank"
-        rel="noreferrer"
-        aria-label={label}
-        className="p-3 bg-slate-900 rounded-full text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-800 hover:border-slate-600 transition-all"
-    >
-        <Icon size={24} />
-    </a>
-);
-
-const HeaderSocialLink = ({ href, label }) => (
-    <a
-        href={href}
-        target="_blank"
-        rel="noreferrer"
-        aria-label={label}
-        className="text-slate-400 hover:text-white hover:scale-110 transition-all"
-    >
-        <Icon size={20} />
-    </a>
-);
 
 export default App;
