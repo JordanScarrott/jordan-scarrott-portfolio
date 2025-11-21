@@ -259,7 +259,7 @@ const SystemTerminal = () => {
 
             {/* Terminal Body */}
             {isOpen && (
-                <div className="p-3 space-y-1 h-32 overflow-hidden bg-black/20 rounded-b-lg">
+                <div className="p-3 space-y-1 h-32 overflow-hidden bg-black/20 rounded-b-lg flex flex-col justify-end">
                     {logs.map((log, i) => (
                         <div
                             key={i}
