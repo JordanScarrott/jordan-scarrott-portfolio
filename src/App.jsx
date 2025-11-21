@@ -19,6 +19,11 @@ import {
     Maximize2,
     Search,
 } from "lucide-react";
+import { skills } from "./data/skills.jsx";
+import { experience } from "./data/experience";
+import { projects } from "./data/projects";
+import { socialLinks } from "./data/socials.jsx";
+import { possibleLogs, initialLogs } from "./data/terminal";
 
 // --- COMPONENT: INTERACTIVE WAVE BACKGROUND ---
 // A nod to "Boussinesq Waves" and Numerical Fluid Simulation
@@ -209,26 +214,10 @@ const GlitchText = ({ text, className }) => {
 // A nod to "Castor" and Engineering background
 const SystemTerminal = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [logs, setLogs] = useState([
-        "> CASTOR_AGENT: ONLINE",
-        "> CONTEXT: " + window.navigator.userAgent.slice(0, 20) + "...",
-        "> DEDUCTION: User is human.",
-        "> MESSAGE: Welcome to the portfolio.",
-    ]);
+    const [logs, setLogs] = useState(initialLogs);
 
     // Log generation
     useEffect(() => {
-        const possibleLogs = [
-            "> Reasoning: Analyzing scroll velocity...",
-            "> Inference: User interest detected in 'Architecture'.",
-            "> Querying: Cross-referencing session duration...",
-            "> Fact Base: Updating local knowledge graph...",
-            "> Mangle Logic: Validating user intent...",
-            "> Gemini Nano: Context window optimized.",
-            "> Deduction: High probability of technical background.",
-            "> Observation: Mouse trajectory implies curiosity.",
-        ];
-
         const interval = setInterval(() => {
             if (Math.random() > 0.6) {
                 const newLog =
@@ -304,44 +293,6 @@ const App = () => {
         }
     };
 
-    // Skills Data
-    const skills = [
-        { name: "Microservices", icon: Layers, level: "Advanced", cat: "Arch" },
-        {
-            name: "Distributed Systems",
-            icon: Box,
-            level: "Advanced",
-            cat: "Arch",
-        },
-        { name: "Vue / Nuxt", icon: Code2, level: "Advanced", cat: "Frontend" },
-        {
-            name: "Java Spring Boot",
-            icon: CoffeeIcon,
-            level: "Advanced",
-            cat: "Backend",
-        },
-        {
-            name: "Go / Golang",
-            icon: Zap,
-            level: "Intermediate",
-            cat: "Backend",
-        },
-        {
-            name: "WebAssembly",
-            icon: Cpu,
-            level: "Specialist",
-            cat: "Performance",
-        },
-        { name: "Elasticsearch", icon: Search, level: "Advanced", cat: "Data" },
-        {
-            name: "Signal Processing",
-            icon: Activity,
-            level: "Academic",
-            cat: "Math",
-        },
-        { name: "PostgreSQL", icon: Database, level: "Advanced", cat: "Data" },
-    ];
-
     return (
         <div className="min-h-screen text-slate-200 font-sans selection:bg-cyan-500/30 selection:text-cyan-200">
             <WaveBackground />
@@ -383,26 +334,14 @@ const App = () => {
 
                     {/* Header Socials */}
                     <div className="flex items-center gap-4">
-                        <HeaderSocialLink
-                            href="https://github.com/JordanScarrott"
-                            icon={Github}
-                            label="GitHub"
-                        />
-                        <HeaderSocialLink
-                            href="https://www.linkedin.com/in/jordan-scarrott-b14b161b6/"
-                            icon={Linkedin}
-                            label="LinkedIn"
-                        />
-                        <HeaderSocialLink
-                            href="https://x.com/JordanScarrott5"
-                            icon={XIcon}
-                            label="X (Twitter)"
-                        />
-                        <HeaderSocialLink
-                            href="https://bsky.app/profile/jordanscarrott.bsky.social"
-                            icon={BlueskyIcon}
-                            label="Bluesky"
-                        />
+                        {socialLinks.map((link, index) => (
+                            <HeaderSocialLink
+                                key={index}
+                                href={link.href}
+                                icon={link.icon}
+                                label={link.label}
+                            />
+                        ))}
                     </div>
                 </div>
             </nav>
@@ -536,198 +475,46 @@ const App = () => {
                     </h2>
 
                     <div className="space-y-12 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-700 before:to-transparent">
-                        {/* Job 1 */}
-                        <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                            <div className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-700 bg-slate-900 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 group-hover:border-cyan-400 transition-colors">
-                                <div className="w-3 h-3 bg-cyan-400 rounded-full animate-pulse"></div>
-                            </div>
-                            <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900/80 p-6 rounded-xl border border-slate-800 shadow-xl backdrop-blur-sm hover:border-cyan-500/30 transition-all">
-                                <div className="flex justify-between items-start mb-2">
-                                    <h3 className="font-bold text-white text-lg">
-                                        Engineer
-                                    </h3>
-                                    <span className="text-xs font-mono text-cyan-400 bg-cyan-950 px-2 py-1 rounded">
-                                        2024 - Present
-                                    </span>
+                        {experience.map((job, index) => (
+                            <div
+                                key={index}
+                                className={`relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group ${
+                                    job.active ? "is-active" : ""
+                                }`}
+                            >
+                                <div className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-700 bg-slate-900 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 group-hover:border-cyan-400 transition-colors">
+                                    {job.active ? (
+                                        <div className="w-3 h-3 bg-cyan-400 rounded-full animate-pulse"></div>
+                                    ) : (
+                                        <div className="w-2 h-2 bg-slate-500 rounded-full group-hover:bg-purple-400 transition-colors"></div>
+                                    )}
                                 </div>
-                                <p className="text-slate-400 text-sm mb-3">
-                                    VASTech, Stellenbosch
-                                </p>
-                                <ul className="text-sm text-slate-400 list-disc list-inside space-y-1">
-                                    <li>
-                                        Led Vue 2 to Vue 3 migration for
-                                        company's largest UI.
-                                    </li>
-                                    <li>
-                                        Independently designed and led the
-                                        adoption of a custom type-safe request
-                                        management system with automatic
-                                        caching.
-                                    </li>
-                                    <li>
-                                        Led a team to design and implement an
-                                        efficient AI based microservice.
-                                    </li>
-                                    <li>
-                                        Architectural decision maker across
-                                        teams.
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        {/* Job 2 */}
-                        <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                            <div className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-700 bg-slate-900 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
-                                <div className="w-2 h-2 bg-slate-500 rounded-full group-hover:bg-purple-400 transition-colors"></div>
-                            </div>
-                            <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900/80 p-6 rounded-xl border border-slate-800 shadow-xl backdrop-blur-sm hover:border-purple-500/30 transition-all">
-                                <div className="flex justify-between items-start mb-2">
-                                    <h3 className="font-bold text-white text-lg">
-                                        Junior Engineer
-                                    </h3>
-                                    <span className="text-xs font-mono text-slate-500 bg-slate-900 px-2 py-1 rounded border border-slate-800">
-                                        2023 - 2024
-                                    </span>
+                                <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900/80 p-6 rounded-xl border border-slate-800 shadow-xl backdrop-blur-sm hover:border-purple-500/30 transition-all">
+                                    <div className="flex justify-between items-start mb-2">
+                                        <h3 className="font-bold text-white text-lg">
+                                            {job.title}
+                                        </h3>
+                                        <span
+                                            className={`text-xs font-mono px-2 py-1 rounded ${
+                                                job.active
+                                                    ? "text-cyan-400 bg-cyan-950"
+                                                    : "text-slate-500 bg-slate-900 border border-slate-800"
+                                            }`}
+                                        >
+                                            {job.period}
+                                        </span>
+                                    </div>
+                                    <p className="text-slate-400 text-sm mb-3">
+                                        {job.company}
+                                    </p>
+                                    <ul className="text-sm text-slate-400 list-disc list-inside space-y-1">
+                                        {job.description.map((item, i) => (
+                                            <li key={i}>{item}</li>
+                                        ))}
+                                    </ul>
                                 </div>
-                                <p className="text-slate-400 text-sm mb-3">
-                                    VASTech, Stellenbosch
-                                </p>
-                                <ul className="text-sm text-slate-400 list-disc list-inside space-y-1">
-                                    <li>
-                                        Decreased audio algo complexity from
-                                        O(N) to O(1).
-                                    </li>
-                                    <li>
-                                        Web Audio API real-time processing
-                                        implementation.
-                                    </li>
-                                    <li>
-                                        Reduced high-volume request usage by
-                                        97%.
-                                    </li>
-                                </ul>
                             </div>
-                        </div>
-
-                        {/* Job 3 */}
-                        <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                            <div className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-700 bg-slate-900 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
-                                <div className="w-2 h-2 bg-slate-500 rounded-full group-hover:bg-purple-400 transition-colors"></div>
-                            </div>
-                            <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900/80 p-6 rounded-xl border border-slate-800 shadow-xl backdrop-blur-sm hover:border-purple-500/30 transition-all">
-                                <div className="flex justify-between items-start mb-2">
-                                    <h3 className="font-bold text-white text-lg">
-                                        Graduate Junior Engineer
-                                    </h3>
-                                    <span className="text-xs font-mono text-slate-500 bg-slate-900 px-2 py-1 rounded border border-slate-800">
-                                        2022 - 2023
-                                    </span>
-                                </div>
-                                <p className="text-slate-400 text-sm mb-3">
-                                    VASTech, Stellenbosch
-                                </p>
-                                <ul className="text-sm text-slate-400 list-disc list-inside space-y-1">
-                                    <li>
-                                        High-security full-stack application
-                                        development.
-                                    </li>
-                                    <li>
-                                        Implemented gRPC APIs and Vue.js
-                                        features.
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        {/* Job 4: MEng (Cum Laude) */}
-                        <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                            <div className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-700 bg-slate-900 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
-                                <div className="w-2 h-2 bg-slate-500 rounded-full group-hover:bg-purple-400 transition-colors"></div>
-                            </div>
-                            <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900/80 p-6 rounded-xl border border-slate-800 shadow-xl backdrop-blur-sm hover:border-purple-500/30 transition-all">
-                                <div className="flex justify-between items-start mb-2">
-                                    <h3 className="font-bold text-white text-lg">
-                                        MEng (Cum Laude)
-                                    </h3>
-                                    <span className="text-xs font-mono text-slate-500 bg-slate-900 px-2 py-1 rounded border border-slate-800">
-                                        2020 - 2024
-                                    </span>
-                                </div>
-                                <p className="text-slate-400 text-sm mb-3">
-                                    CPUT, Bellville
-                                </p>
-                                <ul className="text-sm text-slate-400 list-disc list-inside space-y-1">
-                                    <li>
-                                        Temporal and Spectral Analysis of
-                                        Experimental and Simulated Boussinesq
-                                        Waves
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        {/* Job 5: BTech */}
-                        <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                            <div className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-700 bg-slate-900 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
-                                <div className="w-2 h-2 bg-slate-500 rounded-full group-hover:bg-purple-400 transition-colors"></div>
-                            </div>
-                            <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900/80 p-6 rounded-xl border border-slate-800 shadow-xl backdrop-blur-sm hover:border-purple-500/30 transition-all">
-                                <div className="flex justify-between items-start mb-2">
-                                    <h3 className="font-bold text-white text-lg">
-                                        BTech - Electrical Engineering
-                                    </h3>
-                                    <span className="text-xs font-mono text-slate-500 bg-slate-900 px-2 py-1 rounded border border-slate-800">
-                                        2019
-                                    </span>
-                                </div>
-                                <p className="text-slate-400 text-sm mb-3">
-                                    CPUT, Bellville
-                                </p>
-                                <ul className="text-sm text-slate-400 list-disc list-inside space-y-1">
-                                    <li>
-                                        Created an AI robot that could follow
-                                        you using TensorFlow.js object detection
-                                        running on a smartphone.
-                                    </li>
-                                    <li>
-                                        Simulated the control system for nuclear
-                                        power plant fuel rod insertion using
-                                        MATLAB.
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        {/* Job 6: Lab Assistant */}
-                        <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                            <div className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-700 bg-slate-900 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
-                                <div className="w-2 h-2 bg-slate-500 rounded-full group-hover:bg-purple-400 transition-colors"></div>
-                            </div>
-                            <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-900/80 p-6 rounded-xl border border-slate-800 shadow-xl backdrop-blur-sm hover:border-purple-500/30 transition-all">
-                                <div className="flex justify-between items-start mb-2">
-                                    <h3 className="font-bold text-white text-lg">
-                                        Lab Assistant / Trainee
-                                    </h3>
-                                    <span className="text-xs font-mono text-slate-500 bg-slate-900 px-2 py-1 rounded border border-slate-800">
-                                        2017 - 2018
-                                    </span>
-                                </div>
-                                <p className="text-slate-400 text-sm mb-3">
-                                    CPUT - Centre for Instrumentation Research
-                                </p>
-                                <ul className="text-sm text-slate-400 list-disc list-inside space-y-1">
-                                    <li>
-                                        Setup of optical systems for laser
-                                        spectroscopy (quantum physics).
-                                    </li>
-                                    <li>
-                                        Co-authored a paper modelling external
-                                        cathode diode lasers.
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </section>
@@ -740,50 +527,16 @@ const App = () => {
                     </h2>
 
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {/* Project 1: Castor */}
-                        <ProjectCard
-                            title="Castor - On-Device AI"
-                            desc="Supercharged Gemini Nano with Google Mangle compiled to WASM to perform multi-step cross-tab deductive reasoning locally. An on-device AI extension capable of complex logical inference."
-                            tags={[
-                                "WASM",
-                                "Gemini Nano",
-                                "Google Mangle",
-                                "Reasoning",
-                            ]}
-                            links={[
-                                {
-                                    label: "GitHub",
-                                    url: "https://github.com/JordanScarrott/castor-chrome-extension",
-                                    icon: Github,
-                                },
-                                {
-                                    label: "Demo",
-                                    url: "https://www.youtube.com/watch?v=cirnnE6_dz4",
-                                    icon: ExternalLink,
-                                },
-                                {
-                                    label: "DevPost",
-                                    url: "https://devpost.com/software/a-la-carte?ref_content=user-portfolio&ref_feature=in_progress",
-                                    icon: Trophy,
-                                },
-                            ]}
-                            color="cyan"
-                        />
-
-                        {/* Project 2: Boussinesq Waves */}
-                        <ProjectCard
-                            title="Boussinesq Waves"
-                            desc="Masters research: Temporal and spectral analysis of experimental and numerical Boussinesq waves on beaches."
-                            tags={["Fluid Sim", "Math", "Signal Processing"]}
-                            links={[
-                                {
-                                    label: "GitHub",
-                                    url: "https://github.com/JordanScarrott/boussinesq-waves",
-                                    icon: Github,
-                                },
-                            ]}
-                            color="purple"
-                        />
+                        {projects.map((project, index) => (
+                            <ProjectCard
+                                key={index}
+                                title={project.title}
+                                desc={project.desc}
+                                tags={project.tags}
+                                links={project.links}
+                                color={project.color}
+                            />
+                        ))}
                     </div>
                 </div>
             </section>
@@ -809,26 +562,14 @@ const App = () => {
                     </a>
 
                     <div className="flex justify-center flex-wrap gap-6 mt-12">
-                        <SocialLink
-                            href="https://www.linkedin.com/in/jordan-scarrott-b14b161b6/"
-                            icon={Linkedin}
-                            label="LinkedIn"
-                        />
-                        <SocialLink
-                            href="https://github.com/JordanScarrott"
-                            icon={Github}
-                            label="GitHub"
-                        />
-                        <SocialLink
-                            href="https://x.com/JordanScarrott5"
-                            icon={XIcon}
-                            label="X (Twitter)"
-                        />
-                        <SocialLink
-                            href="https://bsky.app/profile/jordanscarrott.bsky.social"
-                            icon={BlueskyIcon}
-                            label="Bluesky"
-                        />
+                        {socialLinks.map((link, index) => (
+                            <SocialLink
+                                key={index}
+                                href={link.href}
+                                icon={link.icon}
+                                label={link.label}
+                            />
+                        ))}
                     </div>
                 </div>
             </section>
@@ -920,38 +661,6 @@ const HeaderSocialLink = ({ href, icon: Icon, label }) => (
     >
         <Icon size={20} />
     </a>
-);
-
-const CoffeeIcon = ({ size, className }) => (
-    <svg
-        width={size}
-        height={size}
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className={className}
-    >
-        <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
-        <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
-        <line x1="6" y1="1" x2="6" y2="4" />
-        <line x1="10" y1="1" x2="10" y2="4" />
-        <line x1="14" y1="1" x2="14" y2="4" />
-    </svg>
-);
-
-const XIcon = ({ size }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-    </svg>
-);
-
-const BlueskyIcon = ({ size }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565-.131 2.032-.268 3.036.226 4.39c1.12 3.065 3.396 5.24 4.606 6.236-1.513-.206-5.713.037-5.64 4.563.033 2.048 1.406 3.52 2.777 4.36 1.872 1.147 3.816.526 5.198-.491 1.694-1.245 2.036-2.649 4.833-7.196 2.797 4.547 3.139 5.951 4.833 7.196 1.382 1.017 3.326 1.638 5.198.491 1.371-.84 2.744-2.312 2.777-4.36.073-4.526-4.127-4.769-5.64-4.563 1.21-.996 3.486-3.171 4.606-6.236.494-1.354.357-2.358-.676-2.825-.659-.299-1.664-.621-4.3 1.24C16.046 4.748 13.087 8.686 12 10.8z" />
-    </svg>
 );
 
 export default App;
