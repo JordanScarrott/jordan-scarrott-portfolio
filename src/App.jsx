@@ -124,12 +124,13 @@ const App = () => {
     // You can toggle these or add them conditionally
     const waveEffects = [
         // new SineWaveEffect(10, 0.05, 0.002), // Uncomment to enable global wave
-        new ColorShiftEffect() // Enables dynamic color based on velocity
+        new ColorShiftEffect(), // Enables dynamic color based on velocity
     ];
 
     return (
         <div className="min-h-screen text-slate-200 font-sans selection:bg-cyan-500/30 selection:text-cyan-200">
-            <WaveBackground behaviors={waveEffects} />
+            <WaveBackground behaviors={waveEffects} variant="grid" />
+            {/* <WaveBackground behaviors={waveEffects} variant="fluid" /> */}
             <SystemTerminal />
 
             {/* NAVIGATION */}
