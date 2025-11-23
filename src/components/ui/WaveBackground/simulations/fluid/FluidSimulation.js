@@ -12,7 +12,7 @@ export class FluidSimulation extends Simulation {
         // SPH Constants (Tunable for visual effect)
         this.smoothingRadius = config.smoothingRadius || 60; // Interaction radius (h)
         this.targetDensity = config.targetDensity || 3; // Rest density
-        this.pressureMultiplier = config.pressureMultiplier || 150; // Stiffness (k)
+        this.pressureMultiplier = config.pressureMultiplier || 100; // Stiffness (k) - Reduced for less explosive force
         this.viscosityStrength = config.viscosityStrength || 0.1;
 
         this.grid = null;
@@ -129,16 +129,16 @@ export class FluidSimulation extends Simulation {
             // F = ma (assume m=1) -> a = F
             // Apply forces
             // Limit force to prevent explosion
-            const maxForce = 20;
+            const maxForce = 8; // Significantly reduced to prevent chaos
             p.fx = Math.max(-maxForce, Math.min(maxForce, p.fx));
             p.fy = Math.max(-maxForce, Math.min(maxForce, p.fy));
 
-            p.vx += p.fx * 0.05; // Time step
-            p.vy += p.fy * 0.05;
+            p.vx += p.fx * 0.015; // Reduced time step for slower motion
+            p.vy += p.fy * 0.015;
 
             // Global Damping (Drag)
-            p.vx *= 0.98;
-            p.vy *= 0.98;
+            p.vx *= 0.96; // Increased damping
+            p.vy *= 0.96;
 
             // Apply Velocity
             p.x += p.vx;
@@ -156,7 +156,9 @@ export class FluidSimulation extends Simulation {
 
     draw() {
         const { ctx, width, height } = this;
-        ctx.clearRect(0, 0, width, height);
+        // Trail effect: Fade out instead of clear
+        ctx.fillStyle = "rgba(2, 6, 23, 0.3)"; // Slate-950 with opacity
+        ctx.fillRect(0, 0, width, height);
 
         // Render SPH particles (Blobs)
         // To make it look "fluid", we could use thresholding or metaballs,
