@@ -1,33 +1,61 @@
 import React, { useEffect, useRef } from 'react';
-import { WaveSimulation } from './WaveSimulation';
+import { GridSimulation } from './simulations/grid/GridSimulation';
+import { FluidSimulation } from './simulations/fluid/FluidSimulation';
 import { MouseRepulsionEffect } from './effects/MouseRepulsionEffect';
+import { CursorObstruction } from './simulations/fluid/CursorObstruction';
+import { ClickSplash } from './simulations/fluid/ClickSplash';
+import { NoiseFlowField } from './simulations/fluid/NoiseFlowField';
 
-const WaveBackground = ({ behaviors = [] }) => {
+const WaveBackground = ({
+    behaviors = [],
+    variant = 'grid', // 'grid' | 'fluid'
+    simulationConfig = {}
+}) => {
     const canvasRef = useRef(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
-        const simulation = new WaveSimulation(canvas);
+        let simulation;
         let animationFrameId;
 
         // Mouse interaction state
         let mouseX = -1000;
         let mouseY = -1000;
+        let isClicked = false;
+
+        // Instantiate Simulation based on variant
+        if (variant === 'fluid') {
+            simulation = new FluidSimulation(canvas, simulationConfig);
+            // Add default fluid interactions
+            simulation.addInteraction(new CursorObstruction());
+            simulation.addInteraction(new ClickSplash());
+            simulation.addInteraction(new NoiseFlowField());
+        } else {
+            simulation = new GridSimulation(canvas, simulationConfig);
+            // Add default grid effect
+            simulation.addEffect(new MouseRepulsionEffect());
+        }
 
         // Initialize simulation
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         simulation.init();
 
-        // Add default mouse effect
-        simulation.addEffect(new MouseRepulsionEffect());
-
-        // Add custom behaviors
-        behaviors.forEach(behavior => simulation.addEffect(behavior));
+        // Add custom behaviors (Consumers must ensure behaviors match the variant)
+        if (variant === 'grid') {
+             behaviors.forEach(behavior => simulation.addEffect(behavior));
+        } else if (variant === 'fluid') {
+             behaviors.forEach(behavior => simulation.addInteraction(behavior));
+        }
 
         const animate = (time) => {
-            simulation.update({ mouseX, mouseY, time });
+            simulation.update({ mouseX, mouseY, isClicked, time });
             simulation.draw();
+            // Reset click state after one frame of processing if needed,
+            // but for continuous splash while holding, we keep it.
+            // If ClickSplash is instantaneous, it should handle 'just pressed' logic,
+            // but here we pass 'isClicked' as "is mouse down".
+
             animationFrameId = requestAnimationFrame(animate);
         };
 
@@ -35,6 +63,14 @@ const WaveBackground = ({ behaviors = [] }) => {
             const rect = canvas.getBoundingClientRect();
             mouseX = e.clientX - rect.left;
             mouseY = e.clientY - rect.top;
+        };
+
+        const handleMouseDown = () => {
+            isClicked = true;
+        };
+
+        const handleMouseUp = () => {
+            isClicked = false;
         };
 
         const handleResize = () => {
@@ -47,13 +83,17 @@ const WaveBackground = ({ behaviors = [] }) => {
 
         window.addEventListener("resize", handleResize);
         window.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener("mousedown", handleMouseDown);
+        window.addEventListener("mouseup", handleMouseUp);
 
         return () => {
             window.removeEventListener("resize", handleResize);
             window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("mousedown", handleMouseDown);
+            window.removeEventListener("mouseup", handleMouseUp);
             cancelAnimationFrame(animationFrameId);
         };
-    }, [behaviors]);
+    }, [behaviors, variant, simulationConfig]);
 
     return (
         <canvas

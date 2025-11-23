@@ -129,7 +129,7 @@ const App = () => {
 
     return (
         <div className="min-h-screen text-slate-200 font-sans selection:bg-cyan-500/30 selection:text-cyan-200">
-            <WaveBackground behaviors={waveEffects} />
+            <WaveBackground variant="fluid" />
             <SystemTerminal />
 
             {/* NAVIGATION */}
