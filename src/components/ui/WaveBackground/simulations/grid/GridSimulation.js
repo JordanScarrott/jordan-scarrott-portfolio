@@ -1,14 +1,13 @@
-export class WaveSimulation {
-    constructor(canvas, spacing = 25) {
-        this.canvas = canvas;
-        this.ctx = canvas.getContext("2d");
-        this.spacing = spacing;
+import { Simulation } from '../Simulation';
+
+export class GridSimulation extends Simulation {
+    constructor(canvas, config = {}) {
+        super(canvas, config);
+        this.spacing = config.spacing || 25;
         this.points = [];
         this.cols = 0;
         this.rows = 0;
         this.effects = [];
-        this.width = 0;
-        this.height = 0;
     }
 
     addEffect(effect) {
@@ -17,8 +16,7 @@ export class WaveSimulation {
     }
 
     init() {
-        this.width = this.canvas.width;
-        this.height = this.canvas.height;
+        super.init();
         this.cols = Math.ceil(this.width / this.spacing);
         this.rows = Math.ceil(this.height / this.spacing);
         this.points = [];
