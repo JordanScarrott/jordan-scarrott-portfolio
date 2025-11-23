@@ -21,6 +21,7 @@ import MetricItem from "./components/ui/MetricItem";
 import WaveBackground from "./components/ui/WaveBackground/WaveBackground";
 import { SineWaveEffect } from "./components/ui/WaveBackground/effects/SineWaveEffect";
 import { ColorShiftEffect } from "./components/ui/WaveBackground/effects/ColorShiftEffect";
+import { VortexEffect } from "./components/ui/WaveBackground/effects/VortexEffect";
 
 // --- COMPONENT: GLITCH TEXT EFFECT ---
 const GlitchText = ({ text, className }) => {
@@ -124,6 +125,7 @@ const App = () => {
     // You can toggle these or add them conditionally
     const waveEffects = [
         // new SineWaveEffect(10, 0.05, 0.002), // Uncomment to enable global wave
+        new VortexEffect({ radius: 300, strength: 0.8 }), // Swirling black hole effect
         new ColorShiftEffect() // Enables dynamic color based on velocity
     ];
 
