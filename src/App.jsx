@@ -18,176 +18,9 @@ import HeaderSocialLink from "./components/ui/HeaderSocialLink";
 import ProjectCard from "./components/ui/ProjectCard";
 import SocialLink from "./components/ui/SocialLink";
 import MetricItem from "./components/ui/MetricItem";
-
-// --- COMPONENT: INTERACTIVE WAVE BACKGROUND ---
-// A nod to "Boussinesq Waves" and Numerical Fluid Simulation
-const WaveBackground = () => {
-    const canvasRef = useRef(null);
-
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext("2d");
-        let animationFrameId;
-
-        // Grid settings
-        const spacing = 25;
-        let cols, rows;
-        let points = [];
-
-        // Mouse interaction
-        let mouseX = -1000;
-        let mouseY = -1000;
-
-        const init = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            cols = Math.ceil(canvas.width / spacing);
-            rows = Math.ceil(canvas.height / spacing);
-            points = [];
-
-            for (let x = 0; x < cols; x++) {
-                points[x] = [];
-                for (let y = 0; y < rows; y++) {
-                    points[x][y] = {
-                        x: x * spacing,
-                        y: y * spacing,
-                        baseX: x * spacing,
-                        baseY: y * spacing,
-                        vx: 0,
-                        vy: 0,
-                        force: 0,
-                        damp: 0.95, // Damping factor for wave decay
-                    };
-                }
-            }
-        };
-
-        const update = () => {
-            // Interaction force
-            for (let x = 0; x < cols; x++) {
-                for (let y = 0; y < rows; y++) {
-                    const p = points[x][y];
-                    const dx = mouseX - p.x;
-                    const dy = mouseY - p.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-
-                    // Mouse influence (Create disturbance)
-                    if (dist < 150) {
-                        const force = (150 - dist) / 150;
-                        p.vx -= (dx / dist) * force * 2;
-                        p.vy -= (dy / dist) * force * 2;
-                    }
-
-                    // Spring back to grid (Elasticity)
-                    const dxBase = p.baseX - p.x;
-                    const dyBase = p.baseY - p.y;
-                    p.vx += dxBase * 0.05;
-                    p.vy += dyBase * 0.05;
-
-                    // Apply velocity
-                    p.x += p.vx;
-                    p.y += p.vy;
-
-                    // Damping
-                    p.vx *= p.damp;
-                    p.vy *= p.damp;
-                }
-            }
-        };
-
-        const draw = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Draw connections (Grid lines)
-            ctx.beginPath();
-            ctx.strokeStyle = "rgba(56, 189, 248, 0.15)"; // Sky-400 with low opacity
-
-            // Horizontal lines
-            for (let y = 0; y < rows; y++) {
-                ctx.moveTo(points[0][y].x, points[0][y].y);
-                for (let x = 1; x < cols; x++) {
-                    // Simple quadratic curve for smoother lines
-                    const xc = (points[x][y].x + points[x - 1][y].x) / 2;
-                    const yc = (points[x][y].y + points[x - 1][y].y) / 2;
-                    ctx.quadraticCurveTo(
-                        points[x - 1][y].x,
-                        points[x - 1][y].y,
-                        xc,
-                        yc
-                    );
-                }
-            }
-
-            // Vertical lines
-            for (let x = 0; x < cols; x++) {
-                ctx.moveTo(points[x][0].x, points[x][0].y);
-                for (let y = 1; y < rows; y++) {
-                    const xc = (points[x][y].x + points[x][y - 1].x) / 2;
-                    const yc = (points[x][y].y + points[x][y - 1].y) / 2;
-                    ctx.quadraticCurveTo(
-                        points[x][y - 1].x,
-                        points[x][y - 1].y,
-                        xc,
-                        yc
-                    );
-                }
-            }
-            ctx.stroke();
-
-            // Draw Nodes (Particles)
-            ctx.fillStyle = "rgba(56, 189, 248, 0.4)";
-            for (let x = 0; x < cols; x++) {
-                for (let y = 0; y < rows; y++) {
-                    const p = points[x][y];
-                    // Only draw if displaced significantly to save performance
-                    if (
-                        Math.abs(p.x - p.baseX) > 0.5 ||
-                        Math.abs(p.y - p.baseY) > 0.5
-                    ) {
-                        ctx.beginPath();
-                        ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-                }
-            }
-        };
-
-        const animate = () => {
-            update();
-            draw();
-            animationFrameId = requestAnimationFrame(animate);
-        };
-
-        const handleMouseMove = (e) => {
-            const rect = canvas.getBoundingClientRect();
-            mouseX = e.clientX - rect.left;
-            mouseY = e.clientY - rect.top;
-        };
-
-        const handleResize = () => {
-            init();
-        };
-
-        init();
-        animate();
-
-        window.addEventListener("resize", handleResize);
-        window.addEventListener("mousemove", handleMouseMove);
-
-        return () => {
-            window.removeEventListener("resize", handleResize);
-            window.removeEventListener("mousemove", handleMouseMove);
-            cancelAnimationFrame(animationFrameId);
-        };
-    }, []);
-
-    return (
-        <canvas
-            ref={canvasRef}
-            className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none bg-slate-950"
-        />
-    );
-};
+import WaveBackground from "./components/ui/WaveBackground/WaveBackground";
+import { SineWaveEffect } from "./components/ui/WaveBackground/effects/SineWaveEffect";
+import { ColorShiftEffect } from "./components/ui/WaveBackground/effects/ColorShiftEffect";
 
 // --- COMPONENT: GLITCH TEXT EFFECT ---
 const GlitchText = ({ text, className }) => {
@@ -287,9 +120,16 @@ const App = () => {
         }
     };
 
+    // Example of adding custom effects
+    // You can toggle these or add them conditionally
+    const waveEffects = [
+        // new SineWaveEffect(10, 0.05, 0.002), // Uncomment to enable global wave
+        new ColorShiftEffect() // Enables dynamic color based on velocity
+    ];
+
     return (
         <div className="min-h-screen text-slate-200 font-sans selection:bg-cyan-500/30 selection:text-cyan-200">
-            <WaveBackground />
+            <WaveBackground behaviors={waveEffects} />
             <SystemTerminal />
 
             {/* NAVIGATION */}
