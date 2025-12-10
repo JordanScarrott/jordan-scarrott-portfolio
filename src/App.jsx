@@ -8,7 +8,7 @@ import {
     Trophy,
     Waves,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { experience } from "./data/experience";
 import { projects } from "./data/projects";
 import { skills } from "./data/skills";
@@ -110,7 +110,8 @@ const SystemTerminal = () => {
 
 // --- MAIN APP COMPONENT ---
 const App = () => {
-    const [setActiveSection] = useState("home");
+    // eslint-disable-next-line no-unused-vars
+    const [activeSection, setActiveSection] = useState("home");
 
     const scrollTo = (id) => {
         const element = document.getElementById(id);
@@ -122,10 +123,11 @@ const App = () => {
 
     // Example of adding custom effects
     // You can toggle these or add them conditionally
-    const waveEffects = [
+    // Memoized to prevent re-initialization of WaveBackground on every render
+    const waveEffects = useMemo(() => [
         // new SineWaveEffect(10, 0.05, 0.002), // Uncomment to enable global wave
         new ColorShiftEffect(), // Enables dynamic color based on velocity
-    ];
+    ], []);
 
     return (
         <div className="min-h-screen text-slate-200 font-sans selection:bg-cyan-500/30 selection:text-cyan-200">
