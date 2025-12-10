@@ -64,35 +64,44 @@ const SystemTerminal = () => {
                 isOpen ? "w-96" : "w-64"
             }`}
         >
-            {/* Header Bar - Clickable to Toggle */}
-            <div
-                className="flex items-center justify-between p-2 border-b border-slate-800 bg-slate-800/50 cursor-pointer hover:bg-slate-800 transition-colors rounded-t-lg"
-                onClick={() => setIsOpen(!isOpen)}
-            >
-                <span className="text-slate-400 flex items-center gap-2 font-bold">
+            {/* Header Bar */}
+            <div className="flex items-center justify-between border-b border-slate-800 bg-slate-800/50 hover:bg-slate-800 focus-within:bg-slate-800 transition-colors rounded-t-lg">
+                <button
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="flex-grow p-2 text-left flex items-center gap-2 font-bold text-slate-400 focus:outline-none focus-visible:text-slate-200 focus-visible:ring-2 focus-visible:ring-cyan-500/50 rounded-tl-lg"
+                    aria-expanded={isOpen}
+                    aria-controls="terminal-body"
+                >
                     <Terminal size={12} /> CASTOR_AGENT
-                </span>
-                <div className="flex items-center gap-2">
+                </button>
+                <div className="flex items-center gap-2 pr-2">
                     {/* DevPost Link in Header */}
                     <a
                         href="https://devpost.com/software/a-la-carte?ref_content=user-portfolio&ref_feature=in_progress"
                         target="_blank"
                         rel="noreferrer"
-                        className="text-slate-500 hover:text-emerald-400 transition-colors"
-                        onClick={(e) => e.stopPropagation()} // Prevent toggle when clicking link
+                        className="text-slate-500 hover:text-emerald-400 transition-colors p-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 focus-visible:text-emerald-400"
                         title="View Competition Entry"
+                        aria-label="View Competition Entry on DevPost"
                     >
                         <Trophy size={12} />
                     </a>
-                    <div className="text-slate-500 hover:text-slate-300">
+                    <button
+                        onClick={() => setIsOpen(!isOpen)}
+                        className="text-slate-500 hover:text-slate-300 p-1 rounded transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 focus-visible:text-slate-300"
+                        aria-label={isOpen ? "Minimize terminal" : "Maximize terminal"}
+                    >
                         {isOpen ? <Minus size={12} /> : <Maximize2 size={12} />}
-                    </div>
+                    </button>
                 </div>
             </div>
 
             {/* Terminal Body */}
             {isOpen && (
-                <div className="p-3 space-y-1 h-32 overflow-hidden bg-black/20 rounded-b-lg flex flex-col justify-end">
+                <div
+                    id="terminal-body"
+                    className="p-3 space-y-1 h-32 overflow-hidden bg-black/20 rounded-b-lg flex flex-col justify-end"
+                >
                     {logs.map((log, i) => (
                         <div
                             key={i}
