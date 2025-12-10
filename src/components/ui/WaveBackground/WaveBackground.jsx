@@ -101,4 +101,5 @@ const WaveBackground = ({
     );
 };
 
-export default WaveBackground;
+// Memoize component to prevent re-renders when parent re-renders but props are same
+export default React.memo(WaveBackground);
