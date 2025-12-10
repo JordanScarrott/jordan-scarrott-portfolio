@@ -96,6 +96,7 @@ const WaveBackground = ({
     return (
         <canvas
             ref={canvasRef}
+            aria-hidden="true"
             className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none bg-slate-950"
         />
     );
