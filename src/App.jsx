@@ -146,6 +146,13 @@ const App = () => {
 
     return (
         <div className="min-h-screen text-slate-200 font-sans selection:bg-cyan-500/30 selection:text-cyan-200">
+            <a
+                href="#main-content"
+                className="fixed top-4 left-4 z-50 px-4 py-2 bg-cyan-500 text-slate-900 font-bold rounded shadow-lg transform -translate-y-20 focus:translate-y-0 transition-transform duration-200"
+            >
+                Skip to content
+            </a>
+
             <WaveBackground behaviors={waveEffects} variant="grid" />
             {/* <WaveBackground behaviors={waveEffects} variant="fluid" /> */}
             <SystemTerminal />
@@ -198,11 +205,12 @@ const App = () => {
                 </div>
             </nav>
 
-            {/* HERO SECTION */}
-            <section
-                id="home"
-                className="relative min-h-screen flex items-center justify-center pt-20 px-6"
-            >
+            <main id="main-content" className="outline-none" tabIndex="-1">
+                {/* HERO SECTION */}
+                <section
+                    id="home"
+                    className="relative min-h-screen flex items-center justify-center pt-20 px-6"
+                >
                 <div className="max-w-4xl mx-auto text-center z-10">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm mb-6 animate-fade-in-up">
                         <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
@@ -411,15 +419,16 @@ const App = () => {
                 </div>
             </section>
 
-            <footer className="relative py-8 text-center text-slate-600 text-sm border-t border-slate-900 bg-slate-950 z-10">
-                <p>
-                    &copy; {new Date().getFullYear()} Jordan Scarrott. Built
-                    with React & Tailwind.
-                </p>
-                <p className="font-mono text-xs mt-2 text-slate-700">
-                    System.exit(0)
-                </p>
-            </footer>
+                <footer className="relative py-8 text-center text-slate-600 text-sm border-t border-slate-900 bg-slate-950 z-10">
+                    <p>
+                        &copy; {new Date().getFullYear()} Jordan Scarrott. Built
+                        with React & Tailwind.
+                    </p>
+                    <p className="font-mono text-xs mt-2 text-slate-700">
+                        System.exit(0)
+                    </p>
+                </footer>
+            </main>
         </div>
     );
 };
