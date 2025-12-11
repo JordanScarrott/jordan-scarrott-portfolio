@@ -27,10 +27,16 @@ const GlitchText = ({ text, className }) => {
     return (
         <div className={`relative group inline-block ${className}`}>
             <span className="relative z-10">{text}</span>
-            <span className="absolute top-0 left-0 -ml-0.5 translate-x-[1px] text-cyan-400 opacity-0 group-hover:opacity-70 group-hover:animate-pulse">
+            <span
+                aria-hidden="true"
+                className="absolute top-0 left-0 -ml-0.5 translate-x-[1px] text-cyan-400 opacity-0 group-hover:opacity-70 group-hover:animate-pulse"
+            >
                 {text}
             </span>
-            <span className="absolute top-0 left-0 -ml-0.5 -translate-x-[1px] text-red-400 opacity-0 group-hover:opacity-70 group-hover:animate-pulse delay-75">
+            <span
+                aria-hidden="true"
+                className="absolute top-0 left-0 -ml-0.5 -translate-x-[1px] text-red-400 opacity-0 group-hover:opacity-70 group-hover:animate-pulse delay-75"
+            >
                 {text}
             </span>
         </div>
