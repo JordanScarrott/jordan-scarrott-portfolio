@@ -18,6 +18,7 @@ import HeaderSocialLink from "./components/ui/HeaderSocialLink";
 import ProjectCard from "./components/ui/ProjectCard";
 import SocialLink from "./components/ui/SocialLink";
 import MetricItem from "./components/ui/MetricItem";
+import SkipToContent from "./components/ui/SkipToContent";
 import WaveBackground from "./components/ui/WaveBackground/WaveBackground";
 import { SineWaveEffect } from "./components/ui/WaveBackground/effects/SineWaveEffect";
 import { ColorShiftEffect } from "./components/ui/WaveBackground/effects/ColorShiftEffect";
@@ -146,6 +147,7 @@ const App = () => {
 
     return (
         <div className="min-h-screen text-slate-200 font-sans selection:bg-cyan-500/30 selection:text-cyan-200">
+            <SkipToContent />
             <WaveBackground behaviors={waveEffects} variant="grid" />
             {/* <WaveBackground behaviors={waveEffects} variant="fluid" /> */}
             <SystemTerminal />
@@ -198,11 +200,12 @@ const App = () => {
                 </div>
             </nav>
 
-            {/* HERO SECTION */}
-            <section
-                id="home"
-                className="relative min-h-screen flex items-center justify-center pt-20 px-6"
-            >
+            <main id="main-content" tabIndex="-1" className="outline-none">
+                {/* HERO SECTION */}
+                <section
+                    id="home"
+                    className="relative min-h-screen flex items-center justify-center pt-20 px-6"
+                >
                 <div className="max-w-4xl mx-auto text-center z-10">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm mb-6 animate-fade-in-up">
                         <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
@@ -378,38 +381,39 @@ const App = () => {
                 </div>
             </section>
 
-            {/* CONTACT SECTION */}
-            <section id="contact" className="relative py-24 z-10">
-                <div className="max-w-3xl mx-auto px-6 text-center">
-                    <h2 className="text-4xl font-bold text-white mb-8">
-                        Ready to Deploy?
-                    </h2>
-                    <p className="text-slate-400 mb-10 text-lg">
-                        I'm always open to discussing complex engineering
-                        challenges and sharing perspectives on the latest tech.
-                        If you want to geek out over systems architecture or AI,
-                        get in touch.
-                    </p>
+                {/* CONTACT SECTION */}
+                <section id="contact" className="relative py-24 z-10">
+                    <div className="max-w-3xl mx-auto px-6 text-center">
+                        <h2 className="text-4xl font-bold text-white mb-8">
+                            Ready to Deploy?
+                        </h2>
+                        <p className="text-slate-400 mb-10 text-lg">
+                            I'm always open to discussing complex engineering
+                            challenges and sharing perspectives on the latest tech.
+                            If you want to geek out over systems architecture or AI,
+                            get in touch.
+                        </p>
 
-                    <a
-                        href="mailto:jordanscarrott@gmail.com"
-                        className="inline-flex items-center gap-3 bg-slate-100 text-slate-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-cyan-400 transition-colors shadow-lg shadow-cyan-500/20"
-                    >
-                        <Mail /> Send Transmission
-                    </a>
+                        <a
+                            href="mailto:jordanscarrott@gmail.com"
+                            className="inline-flex items-center gap-3 bg-slate-100 text-slate-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-cyan-400 transition-colors shadow-lg shadow-cyan-500/20"
+                        >
+                            <Mail /> Send Transmission
+                        </a>
 
-                    <div className="flex justify-center flex-wrap gap-6 mt-12">
-                        {socialLinks.map((link, index) => (
-                            <SocialLink
-                                key={index}
-                                href={link.href}
-                                icon={link.icon}
-                                label={link.label}
-                            />
-                        ))}
+                        <div className="flex justify-center flex-wrap gap-6 mt-12">
+                            {socialLinks.map((link, index) => (
+                                <SocialLink
+                                    key={index}
+                                    href={link.href}
+                                    icon={link.icon}
+                                    label={link.label}
+                                />
+                            ))}
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </main>
 
             <footer className="relative py-8 text-center text-slate-600 text-sm border-t border-slate-900 bg-slate-950 z-10">
                 <p>

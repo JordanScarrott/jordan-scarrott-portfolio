@@ -1,0 +1,3 @@
+## 2024-05-23 - Skip to Content Implementation
+**Learning:** Adding a "Skip to Content" link requires not just the link itself, but also wrapping the main content area in a `<main>` tag with `tabIndex="-1"`. This ensures that when the link is clicked, the focus is programmatically moved to the content container, allowing subsequent tab presses to correctly interact with the content inside. Without `tabIndex="-1"`, clicking the link scrolls the page but might leave the focus on the link or body, requiring the user to tab through the navigation again in some browsers.
+**Action:** Always pair a skip link with a wrapper element that has an ID and `tabIndex="-1"`.
