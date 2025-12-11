@@ -17,6 +17,9 @@ const WaveBackground = ({
         let simulation;
         let animationFrameId;
 
+        // Cache canvas rect to avoid forced reflows in mousemove
+        let rect = canvas.getBoundingClientRect();
+
         // Mouse interaction state
         let mouseX = -1000;
         let mouseY = -1000;
@@ -37,6 +40,8 @@ const WaveBackground = ({
         // Initialize simulation
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+        // Update rect after resize/init
+        rect = canvas.getBoundingClientRect();
         simulation.init();
 
         // Add custom behaviors (Consumers must ensure behaviors match the variant)
@@ -58,7 +63,8 @@ const WaveBackground = ({
         };
 
         const handleMouseMove = (e) => {
-            const rect = canvas.getBoundingClientRect();
+            // Optimization: Use cached rect instead of calling getBoundingClientRect()
+            // which causes a forced reflow on every mouse move.
             mouseX = e.clientX - rect.left;
             mouseY = e.clientY - rect.top;
         };
@@ -74,6 +80,10 @@ const WaveBackground = ({
         const handleResize = () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+
+            // Update cached rect on resize
+            rect = canvas.getBoundingClientRect();
+
             simulation.init();
         };
 
